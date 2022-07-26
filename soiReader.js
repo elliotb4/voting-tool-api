@@ -1,9 +1,11 @@
 const fs = require("fs");
-const borda = require("./local modules/Borda");
+const borda = require("./local-modules/Borda");
+const irv = require("./local-modules/IRV");
+const stv = require("./local-modules/STV");
 
 // create into function with number or whole file name input
 
-fs.readFile("datasets/ED-00007-00000005.soi", "utf-8", (err, data) => {
+fs.readFile("datasets/ED-00007-00000080.soi", "utf-8", (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -33,6 +35,12 @@ fs.readFile("datasets/ED-00007-00000005.soi", "utf-8", (err, data) => {
       votes.push(line.slice(1, line.length).map(Number));
     }
   }
+
   // console.log(votes[0], votes[votes.length - 1]);
-  console.log(borda.winner(candidateCount, votes));
+  console.log(
+    borda.mbcWinner(candidateCount, votes),
+    borda.avgWinner(candidateCount, votes)
+  );
+  //   console.log(irv.winner(candidateCount, votes));
+  //   console.log(stv.winner(candidateCount, votes));
 });
