@@ -22,7 +22,7 @@ var borda = {
       candidateTotals = util.arraySum(candidateTotals, ballotScores);
       // console.log(candidateTotals);
     }
-    console.log(candidateTotals);
+    // console.log(candidateTotals);
     // console.log(Math.max(...candidateTotals));
 
     return candidateTotals.indexOf(Math.max(...candidateTotals)) + 1;
@@ -54,7 +54,7 @@ var borda = {
       candidateTotals = util.arraySum(candidateTotals, ballotScores);
       // console.log(candidateTotals);
     }
-    console.log(candidateTotals);
+    // console.log(candidateTotals);
     // console.log(Math.max(...candidateTotals));
 
     return candidateTotals.indexOf(Math.max(...candidateTotals)) + 1;

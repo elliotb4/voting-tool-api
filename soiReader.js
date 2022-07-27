@@ -5,7 +5,7 @@ const stv = require("./local-modules/STV");
 
 // create into function with number or whole file name input
 
-fs.readFile("datasets/ED-00007-00000080.soi", "utf-8", (err, data) => {
+fs.readFile("datasets/ED-00007-00000001.soi", "utf-8", (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -37,10 +37,15 @@ fs.readFile("datasets/ED-00007-00000080.soi", "utf-8", (err, data) => {
   }
 
   // console.log(votes[0], votes[votes.length - 1]);
+  console.log("Borda Count");
   console.log(
-    borda.mbcWinner(candidateCount, votes),
-    borda.avgWinner(candidateCount, votes)
+    `Modified: ${borda.mbcWinner(candidateCount, votes)}, `,
+    `Averaged: ${borda.avgWinner(candidateCount, votes)}`
   );
-  //   console.log(irv.winner(candidateCount, votes));
+  console.log("-----------");
+  console.log("Instant Runoff");
+  console.log(irv.winner(candidateCount, votes));
+  console.log("-----------");
+  console.log("Single Transferable Vote");
   //   console.log(stv.winner(candidateCount, votes));
 });
