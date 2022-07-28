@@ -5,7 +5,7 @@ const stv = require("./local-modules/STV");
 
 // create into function with number or whole file name input
 
-fs.readFile("datasets/ED-00007-00000001.soi", "utf-8", (err, data) => {
+fs.readFile("datasets/ED-00007-00000002.soi", "utf-8", (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -26,26 +26,26 @@ fs.readFile("datasets/ED-00007-00000001.soi", "utf-8", (err, data) => {
   var voteCount = parseInt(data[candidateCount + 1].split(",")[0]);
   // console.log(numVoters);
 
-  var votes = [];
+  var intBallots = [];
+  var stringBallots = [];
   for (let i = candidateCount + 2; i < data.length; i++) {
     var line = data[i].split(",");
     var count = line[0];
 
     for (let i = 0; i < count; i++) {
-      votes.push(line.slice(1, line.length).map(Number));
+      stringBallots.push(line.slice(1, line.length));
+      intBallots.push(line.slice(1, line.length).map(Number));
     }
   }
-
-  // console.log(votes[0], votes[votes.length - 1]);
+  // console.log(ballots[0], ballots[ballots.length - 1]);
   console.log("Borda Count");
   console.log(
-    `Modified: ${borda.mbcWinner(candidateCount, votes)}, `,
-    `Averaged: ${borda.avgWinner(candidateCount, votes)}`
+    `Modified: ${borda.mbcWinner(candidateCount, intBallots)}, `,
+    `Averaged: ${borda.avgWinner(candidateCount, intBallots)}`
   );
   console.log("-----------");
-  console.log("Instant Runoff");
-  console.log(irv.winner(candidateCount, votes));
+  console.log(`Instant Runoff: ${irv.winner(stringBallots)}`);
   console.log("-----------");
   console.log("Single Transferable Vote");
-  //   console.log(stv.winner(candidateCount, votes));
+  //   console.log(stv.winner(candidateCount, ballots));
 });
