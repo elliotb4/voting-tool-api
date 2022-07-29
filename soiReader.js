@@ -5,7 +5,7 @@ const stv = require("./local-modules/STV");
 
 // create into function with number or whole file name input
 
-fs.readFile("datasets/ED-00007-00000002.soi", "utf-8", (err, data) => {
+fs.readFile("datasets/ED-00007-00000001.soi", "utf-8", (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -46,6 +46,5 @@ fs.readFile("datasets/ED-00007-00000002.soi", "utf-8", (err, data) => {
   console.log("-----------");
   console.log(`Instant Runoff: ${irv.winner(stringBallots)}`);
   console.log("-----------");
-  console.log("Single Transferable Vote");
-  //   console.log(stv.winner(candidateCount, ballots));
+  console.log(`Single Transferable Vote: ${stv.winner(stringBallots, 3)}`);
 });

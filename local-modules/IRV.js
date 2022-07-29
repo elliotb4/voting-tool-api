@@ -1,6 +1,6 @@
 var irv = {
   winner: function (ballots) {
-    const candidates = [...new Set([].concat.apply([], ballots))];
+    const candidates = [...new Set(ballots.flat())];
     // console.log(candidates);
     const votes = Object.entries(
       ballots.reduce((votes, [v]) => {
