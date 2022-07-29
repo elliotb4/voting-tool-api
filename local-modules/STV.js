@@ -28,7 +28,7 @@ var stv = {
 
   winner: function (ballots, noOfSeats) {
     let quota = ballots.length / (noOfSeats + 1) + 1;
-    console.log(quota);
+    // console.log(quota);
     let elected = [];
 
     return pass(ballots, noOfSeats, quota, elected);
@@ -55,12 +55,12 @@ function pass(ballots, noOfSeats, quota, elected) {
 
   if (topVotes >= quota) {
     elected.push(topCand);
-    console.log(`${topCand} elected`);
+    // console.log(`${topCand} elected`);
     ballots = ballots
       .map((ballot) => ballot.filter((c) => c != topCand))
       .filter((b) => b.length > 0);
   } else {
-    console.log(`${fewestCand} eliminated`);
+    // console.log(`${fewestCand} eliminated`);
     ballots = ballots
       .map((ballot) => ballot.filter((c) => c != fewestCand))
       .filter((b) => b.length > 0);

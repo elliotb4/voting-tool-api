@@ -5,46 +5,62 @@ const stv = require("./local-modules/STV");
 
 // create into function with number or whole file name input
 
-fs.readFile("datasets/ED-00007-00000001.soi", "utf-8", (err, data) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
+var soiReader = {
+  allWinners: function (fileNo) {
+    // console.log(fileNo);
+    // let stringFileNo = fileNo.toString();
+    // console.log(stringFileNo);
+    // let paddedFileNo = fileNo.padStart(2, "0");
+    let filename = `datasets/ED-00007-000000${fileNo}.soi`;
+    let payload = [];
 
-  data = data.split("\n");
-  // console.log(data);
+    var globalData = fs.readFileSync(filename).toString();
+    // console.log(globalData);
 
-  var candidateCount = parseInt(data[0]);
-  // console.log(candidateCount);
+    globalData = globalData.split("\n");
+    // console.log(data);
 
-  // var candidates = [];
-  // for (let i = 0; i < numCandidates; i++) {
-  //     candidates.push(data[i + 1]);
-  // }
-  // console.log(candidates);
+    var candidateCount = parseInt(globalData[0]);
+    // console.log(candidateCount);
 
-  var voteCount = parseInt(data[candidateCount + 1].split(",")[0]);
-  // console.log(numVoters);
+    // var candidates = [];
+    // for (let i = 0; i < numCandidates; i++) {
+    //     candidates.push(data[i + 1]);
+    // }
+    // console.log(candidates);
 
-  var intBallots = [];
-  var stringBallots = [];
-  for (let i = candidateCount + 2; i < data.length; i++) {
-    var line = data[i].split(",");
-    var count = line[0];
+    var voteCount = parseInt(globalData[candidateCount + 1].split(",")[0]);
+    // console.log(numVoters);
 
-    for (let i = 0; i < count; i++) {
-      stringBallots.push(line.slice(1, line.length));
-      intBallots.push(line.slice(1, line.length).map(Number));
+    var intBallots = [];
+    var stringBallots = [];
+    for (let i = candidateCount + 2; i < globalData.length; i++) {
+      var line = globalData[i].split(",");
+      var count = line[0];
+
+      for (let i = 0; i < count; i++) {
+        stringBallots.push(line.slice(1, line.length));
+        intBallots.push(line.slice(1, line.length).map(Number));
+      }
     }
-  }
-  // console.log(ballots[0], ballots[ballots.length - 1]);
-  console.log("Borda Count");
-  console.log(
-    `Modified: ${borda.mbcWinner(candidateCount, intBallots)}, `,
-    `Averaged: ${borda.avgWinner(candidateCount, intBallots)}`
-  );
-  console.log("-----------");
-  console.log(`Instant Runoff: ${irv.winner(stringBallots)}`);
-  console.log("-----------");
-  console.log(`Single Transferable Vote: ${stv.winner(stringBallots, 3)}`);
-});
+    // console.log(ballots[0], ballots[ballots.length - 1]);
+    // console.log("Borda Count");
+    // console.log(
+    //   `Modified: ${borda.mbcWinner(candidateCount, intBallots)}, `,
+    //   `Averaged: ${borda.avgWinner(candidateCount, intBallots)}`
+    // );
+    // console.log("-----------");
+    // console.log(`Instant Runoff: ${irv.winner(stringBallots)}`);
+    // console.log("-----------");
+    // console.log(`Single Transferable Vote: ${stv.winner(stringBallots, 2)}`);
+
+    payload.push(borda.mbcWinner(candidateCount, intBallots));
+    payload.push(irv.winner(stringBallots));
+    payload.push(stv.winner(stringBallots, 2));
+
+    console.log(payload);
+    return payload;
+  },
+};
+
+module.exports = soiReader;
