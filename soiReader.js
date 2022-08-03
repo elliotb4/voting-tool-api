@@ -2,6 +2,7 @@ const fs = require("fs");
 const borda = require("./local-modules/Borda");
 const irv = require("./local-modules/IRV");
 const stv = require("./local-modules/STV");
+const plurality = require("./local-modules/Plurality");
 
 // create into function with number or whole file name input
 
@@ -10,8 +11,8 @@ var soiReader = {
     // console.log(fileNo);
     // let stringFileNo = fileNo.toString();
     // console.log(stringFileNo);
-    // let paddedFileNo = fileNo.padStart(2, "0");
-    let filename = `datasets/ED-00007-000000${fileNo}.soi`;
+    let paddedFileNo = String(fileNo).padStart(2, "0");
+    let filename = `datasets/ED-00007-000000${paddedFileNo}.soi`;
     let payload = [];
 
     var globalData = fs.readFileSync(filename).toString();
@@ -30,7 +31,7 @@ var soiReader = {
     // console.log(candidates);
 
     var voteCount = parseInt(globalData[candidateCount + 1].split(",")[0]);
-    // console.log(numVoters);
+    // console.log(voteCount);
 
     var intBallots = [];
     var stringBallots = [];
@@ -43,6 +44,7 @@ var soiReader = {
         intBallots.push(line.slice(1, line.length).map(Number));
       }
     }
+    // console.log(stringBallots);
     // console.log(ballots[0], ballots[ballots.length - 1]);
     // console.log("Borda Count");
     // console.log(
@@ -56,7 +58,8 @@ var soiReader = {
 
     payload.push(borda.mbcWinner(candidateCount, intBallots));
     payload.push(irv.winner(stringBallots));
-    payload.push(stv.winner(stringBallots, 2));
+    payload.push(stv.winner(stringBallots, 3));
+    payload.push(plurality.winner(stringBallots));
 
     console.log(payload);
     return payload;

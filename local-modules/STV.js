@@ -28,7 +28,7 @@ var stv = {
 
   winner: function (ballots, noOfSeats) {
     let quota = ballots.length / (noOfSeats + 1) + 1;
-    // console.log(quota);
+    console.log(quota);
     let elected = [];
 
     return pass(ballots, noOfSeats, quota, elected);
@@ -44,6 +44,7 @@ function pass(ballots, noOfSeats, quota, elected) {
       return votes;
     }, Object.assign(...candidates.map((c) => ({ [c]: 0 }))))
   );
+  // console.log(votes);
   const [topCand, topVotes] = votes.reduce(
     ([n, m], [v, c]) => (c > m ? [v, c] : [n, m]),
     ["?", -Infinity]
