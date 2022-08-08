@@ -28,7 +28,7 @@ var stv = {
 
   winner: function (ballots, noOfSeats) {
     let quota = ballots.length / (noOfSeats + 1) + 1;
-    console.log(quota);
+    // console.log(quota);
     let elected = [];
 
     return pass(ballots, noOfSeats, quota, elected);
