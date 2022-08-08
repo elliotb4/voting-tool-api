@@ -5,12 +5,14 @@ const stv = require("./local-modules/STV");
 const plurality = require("./local-modules/Plurality");
 const condorcet = require("./local-modules/Condorcet");
 const express = require("express");
+const cors = require("cors");
 const app = express();
-const port = 3000;
+const port = 8080;
 // const methods = ["borda", "irv", "stv"];
 const sets = [...Array(87).keys()].map((x) => x + 1);
 
 app.use(express.json());
+app.use(cors());
 
 app.listen(port, () => console.log(`live on port ${port}`));
 
@@ -39,6 +41,7 @@ app.post("/preflib", (req, res) => {
 
   //   console.log(soiReader.allWinners(set));
 
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   res.send({
     candidates: candidateCount,
     borda: borda.mbcWinner(candidateCount, intBallots),
