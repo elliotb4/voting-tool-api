@@ -31,7 +31,7 @@ app.post("/preflib", (req, res) => {
   //   }
 
   if (!sets.includes(Number(set))) {
-    res.status(418).send({ message: "dataset not found" });
+    res.status(404).send({ message: "dataset not found" });
   }
 
   const data = soiReader.parseDataset(set);
@@ -44,7 +44,10 @@ app.post("/preflib", (req, res) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   res.send({
     candidates: candidateCount,
-    borda: borda.mbcWinner(candidateCount, intBallots),
+    borda: [
+      borda.mbcWinner(candidateCount, intBallots),
+      borda.avgWinner(candidateCount, intBallots),
+    ],
     irv: irv.winner(stringBallots),
     stv: stv.winner(stringBallots, 3),
     plurality: plurality.winner(stringBallots),
