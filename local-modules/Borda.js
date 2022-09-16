@@ -47,7 +47,7 @@ var borda = {
 
       for (let j = 0; j < preferenceCount; j++) {
         preference = ballot[j];
-        ballotScores[preference - 1] = preferenceCount - j;
+        ballotScores[preference - 1] = candidateCount - j;
         // console.log(ballotScores);
       }
       // console.log(ballotScores);
