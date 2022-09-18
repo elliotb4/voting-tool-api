@@ -7,8 +7,8 @@ const condorcet = require("../local-modules/Condorcet");
 
 const dataset = soiReader.parseDataset(25);
 let [candidateCount, intBallots, stringBallots] = dataset;
-//console.log(intBallots);
-let bordaTestBallots = [[1, 3, 2], [2, 3, 1], [1, 2], [2, 3], [1], [3]];
+// console.log(intBallots);
+let testBallots = [[1, 3, 2], [2, 3, 1], [1, 2], [2, 3], [1], [3]];
 let condorcetBallots = [
   [2, 3, 1, 4],
   [4, 1, 3, 2],
@@ -16,33 +16,38 @@ let condorcetBallots = [
 ];
 
 describe("Election Algorithms", () => {
-  test("candidate count parsed", () => {
+  test("test dataset parsed", () => {
     expect(candidateCount).toBe(4);
+    expect(intBallots[0]).toStrictEqual([3]);
   });
 
   test("modified borda", () => {
-    expect(borda.mbcWinner(3, bordaTestBallots)).toBe(1);
+    expect(borda.mbcWinner(3, testBallots)).toBe(1);
   });
 
   test("averaged borda", () => {
-    expect(borda.avgWinner(3, bordaTestBallots)).toBe(1);
+    expect(borda.avgWinner(3, testBallots)).toBe(1);
   });
 
   test("condorcet", () => {
-    expect(condorcet.winner(intBallots)).toBe(4);
+    expect(condorcet.winner(condorcetBallots)).toBe(1);
   });
 
-  // test.todo("irv works", () => {
-  //   expect(borda.mbcWinner());
-  // });
+  test("no condorcet winner", () => {
+    expect(condorcet.winner(testBallots)).toBe(false);
+  });
 
-  // test.todo("plurality works", () => {
-  //   expect(borda.mbcWinner());
-  // });
+  test("irv", () => {
+    expect(irv.winner(testBallots)).toBe("1");
+  });
 
-  // test.todo("stv works", () => {
-  //   expect(borda.mbcWinner());
-  // });
+  test("plurality", () => {
+    expect(plurality.winner(testBallots)).toBe("1");
+  });
+
+  test("stv", () => {
+    expect(stv.winner(testBallots, 2)).toStrictEqual(["1", "2"]);
+  });
 });
 
 // candidates: candidateCount,
