@@ -1,4 +1,5 @@
 const fs = require("fs");
+const dir = "./datasets";
 
 // create into function with number or whole file name input
 
@@ -8,7 +9,7 @@ var soiReader = {
     // let stringFileNo = fileNo.toString();
     // console.log(stringFileNo);
     let paddedFileNo = String(fileNo).padStart(2, "0");
-    let filename = `datasets/ED-00007-000000${paddedFileNo}.soi`;
+    let filename = `${dir}/ED-00007-000000${paddedFileNo}.soi`;
     // let payload = [];
 
     var globalData = fs.readFileSync(filename).toString();
@@ -60,6 +61,10 @@ var soiReader = {
 
     // console.log(payload);
     return [candidateCount, intBallots, stringBallots];
+  },
+
+  datasetCount: function () {
+    return fs.readdirSync(dir).length;
   },
 };
 

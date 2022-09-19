@@ -49,13 +49,3 @@ describe("Election Algorithms", () => {
     expect(stv.winner(testBallots, 2)).toStrictEqual(["1", "2"]);
   });
 });
-
-// candidates: candidateCount,
-//     borda: [
-//       borda.mbcWinner(candidateCount, intBallots),
-//       borda.avgWinner(candidateCount, intBallots),
-//     ],
-//     irv: irv.winner(stringBallots),
-//     stv: stv.winner(stringBallots, 3),
-//     plurality: plurality.winner(stringBallots),
-//     condorcet: condorcet.winner(intBallots),

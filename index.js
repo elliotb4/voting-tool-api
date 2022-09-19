@@ -4,9 +4,10 @@ const irv = require("./local-modules/IRV");
 const stv = require("./local-modules/STV");
 const plurality = require("./local-modules/Plurality");
 const condorcet = require("./local-modules/Condorcet");
+const efficiency = require("./Efficiency");
 const express = require("express");
 const cors = require("cors");
-const exp = require("constants");
+// const exp = require("constants");
 const app = express();
 const port = 8080;
 // const methods = ["borda", "irv", "stv"];
@@ -16,12 +17,19 @@ app.use(express.json());
 app.use(cors());
 
 app.listen(port, () => console.log(`live on port ${port}`));
+// console.log(efficiency.condorcetEfficiency());
 
 // app.get("/preflib", (req, res) => {
 //   res.status(200).send({
 //     methods: methods,
 //   });
 // });
+
+app.get("/preflib", (req, res) => {
+  res.send({
+    efficiency: efficiency.condorcetEfficiency(),
+  });
+});
 
 app.post("/preflib", (req, res) => {
   //   const { method } = req.params;
