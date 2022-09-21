@@ -7,23 +7,14 @@ const condorcet = require("./local-modules/Condorcet");
 const efficiency = require("./Efficiency");
 const express = require("express");
 const cors = require("cors");
-// const exp = require("constants");
 const app = express();
 const port = 8080;
-// const methods = ["borda", "irv", "stv"];
 const sets = [...Array(87).keys()].map((x) => x + 1);
 
 app.use(express.json());
 app.use(cors());
 
 app.listen(port, () => console.log(`live on port ${port}`));
-// console.log(efficiency.condorcetEfficiency());
-
-// app.get("/preflib", (req, res) => {
-//   res.status(200).send({
-//     methods: methods,
-//   });
-// });
 
 app.get("/preflib", (req, res) => {
   res.send({
@@ -32,34 +23,24 @@ app.get("/preflib", (req, res) => {
 });
 
 app.post("/preflib", (req, res) => {
-  //   const { method } = req.params;
   const { set } = req.body;
-
-  //   if (!methods.includes(method)) {
-  //     res.status(418).send({ message: "invalid method" });
-  //   }
 
   if (!sets.includes(Number(set))) {
     res.status(404).send({ message: "dataset not found" });
   }
 
-  const data = soiReader.parseDataset(set);
-  const candidateCount = data[0];
-  const intBallots = data[1];
-  const stringBallots = data[2];
-
-  //   console.log(soiReader.allWinners(set));
+  const [candidateCount, ballots] = soiReader.parseDataset(set);
 
   res.header("Access-Control-Allow-Origin", "http://localhost:5173");
   res.send({
     candidates: candidateCount,
     borda: [
-      borda.mbcWinner(candidateCount, intBallots),
-      borda.avgWinner(candidateCount, intBallots),
+      borda.mbcWinner(candidateCount, ballots),
+      borda.avgWinner(candidateCount, ballots),
     ],
-    irv: irv.winner(stringBallots),
-    stv: stv.winner(stringBallots, 3),
-    plurality: plurality.winner(stringBallots),
-    condorcet: condorcet.winner(intBallots),
+    irv: irv.winner(ballots),
+    stv: stv.winner(ballots, 3),
+    plurality: plurality.winner(ballots),
+    condorcet: condorcet.winner(ballots),
   });
 });

@@ -8,6 +8,4 @@ var util = {
   },
 };
 
-// console.log(util.bordaBlanksAvg(5));
-
 module.exports = util;

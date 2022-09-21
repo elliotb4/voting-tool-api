@@ -6,8 +6,7 @@ const plurality = require("../local-modules/Plurality");
 const condorcet = require("../local-modules/Condorcet");
 
 const dataset = soiReader.parseDataset(25);
-let [candidateCount, intBallots, stringBallots] = dataset;
-// console.log(intBallots);
+let [candidateCount, ballots] = dataset;
 let testBallots = [[1, 3, 2], [2, 3, 1], [1, 2], [2, 3], [1], [3]];
 let condorcetBallots = [
   [2, 3, 1, 4],
@@ -18,7 +17,7 @@ let condorcetBallots = [
 describe("Election Algorithms", () => {
   test("test dataset parsed", () => {
     expect(candidateCount).toBe(4);
-    expect(intBallots[0]).toStrictEqual([3]);
+    expect(ballots[0]).toStrictEqual([3]);
   });
 
   test("modified borda", () => {
