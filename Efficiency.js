@@ -1,21 +1,18 @@
-const soiReader = require("./soiReader");
-const borda = require("./local-modules/Borda");
-const irv = require("./local-modules/IRV");
-const stv = require("./local-modules/STV");
-const plurality = require("./local-modules/Plurality");
-const condorcet = require("./local-modules/Condorcet");
+const soiReader = require("./SoiReader");
+const borda = require("./election-methods/Borda");
+const irv = require("./election-methods/IRV");
+const plurality = require("./election-methods/Plurality");
+const condorcet = require("./election-methods/Condorcet");
 
 var efficiency = {
   condorcetEfficiency: function () {
-    // console.log(datasetCount);
     const winnerExists = new Array();
     const matchesTally = new Array(4).fill(0);
     const datasetCount = soiReader.datasetCount();
 
     for (let i = 1; i < datasetCount + 1; i++) {
-      // console.log(i);
-      let [candidateCount, intBallots] = soiReader.parseDataset(i);
-      let condorcetWinner = condorcet.winner(intBallots);
+      const [candidateCount, intBallots] = soiReader.parseDataset(i);
+      const condorcetWinner = condorcet.winner(intBallots);
       if (condorcetWinner) {
         winnerExists.push(i);
         if (borda.mbcWinner(candidateCount, intBallots) == condorcetWinner) {

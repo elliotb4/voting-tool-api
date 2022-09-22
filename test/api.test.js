@@ -1,9 +1,9 @@
-const soiReader = require("../soiReader");
-const borda = require("../local-modules/Borda");
-const irv = require("../local-modules/IRV");
-const stv = require("../local-modules/STV");
-const plurality = require("../local-modules/Plurality");
-const condorcet = require("../local-modules/Condorcet");
+const soiReader = require("../SoiReader");
+const borda = require("../election-methods/Borda");
+const irv = require("../election-methods/IRV");
+const stv = require("../election-methods/STV");
+const plurality = require("../election-methods/Plurality");
+const condorcet = require("../election-methods/Condorcet");
 
 const dataset = soiReader.parseDataset(25);
 let [candidateCount, ballots] = dataset;

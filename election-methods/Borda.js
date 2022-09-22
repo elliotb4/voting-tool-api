@@ -1,20 +1,18 @@
-const util = require("./util");
-
 var borda = {
   mbcWinner: function (candidateCount, ballots) {
     let candidateTotals = new Array(candidateCount).fill(0);
-    let ballotScores = candidateTotals;
 
     for (let i = 0; i < ballots.length; i++) {
-      let ballot = ballots[i];
-      let preferenceCount = ballot.length;
+      const ballot = ballots[i];
+      const preferenceCount = ballot.length;
+      const ballotScores = new Array(candidateCount).fill(0);
 
       for (let j = 0; j < preferenceCount; j++) {
         let preference = ballot[j];
         ballotScores[preference - 1] = preferenceCount - j;
       }
 
-      candidateTotals = util.arraySum(candidateTotals, ballotScores);
+      candidateTotals = arraySum(candidateTotals, ballotScores);
     }
 
     return candidateTotals.indexOf(Math.max(...candidateTotals)) + 1;
@@ -24,27 +22,29 @@ var borda = {
     let candidateTotals = new Array(candidateCount).fill(0);
 
     for (let i = 0; i < ballots.length; i++) {
-      let ballot = ballots[i];
-      let preferenceCount = ballot.length;
-      let blankPreferences = candidateCount - preferenceCount;
-      let ballotScores = new Array(candidateCount).fill(
-        bordaAvg(blankPreferences)
+      const ballot = ballots[i];
+      const preferenceCount = ballot.length;
+      const blankPreferences = candidateCount - preferenceCount;
+      const ballotScores = new Array(candidateCount).fill(
+        (blankPreferences + 1) / 2
       );
 
       for (let j = 0; j < preferenceCount; j++) {
-        let preference = ballot[j];
+        const preference = ballot[j];
         ballotScores[preference - 1] = candidateCount - j;
       }
 
-      candidateTotals = util.arraySum(candidateTotals, ballotScores);
+      candidateTotals = arraySum(candidateTotals, ballotScores);
     }
 
     return candidateTotals.indexOf(Math.max(...candidateTotals)) + 1;
   },
 };
 
-function bordaAvg(blankPreferences) {
-  return blankPreferences <= 1 ? 0 : (blankPreferences - 1) / 2;
+function arraySum(array1, array2) {
+  return array1.map(function (value, i) {
+    return value + array2[i];
+  });
 }
 
 module.exports = borda;
