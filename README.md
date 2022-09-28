@@ -1,5 +1,7 @@
 # voting-tool-api
 
+API portion of voting tool appliation for my MSc project
+
 ## start API
 run `node index` in root directory:
 
