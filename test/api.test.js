@@ -40,11 +40,11 @@ describe("Election Algorithms", () => {
     expect(irv.winner(testBallots)).toBe("1");
   });
 
-  test("plurality", () => {
-    expect(plurality.winner(testBallots)).toBe("1");
-  });
-
   test("stv", () => {
     expect(stv.winner(testBallots, 2)).toStrictEqual(["1", "2"]);
+  });
+
+  test("plurality", () => {
+    expect(plurality.winner(testBallots)).toBe("1");
   });
 });

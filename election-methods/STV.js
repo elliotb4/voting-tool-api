@@ -21,7 +21,7 @@ function pass(ballots, noOfSeats, quota, elected) {
     ([n, m], [v, c]) => (c > m ? [v, c] : [n, m]),
     ["?", -Infinity]
   );
-  const [fewestCand, fewestVotes] = votes.reduce(
+  const [fewestCand, _] = votes.reduce(
     ([n, m], [v, c]) => (c < m ? [v, c] : [n, m]),
     ["?", Infinity]
   );

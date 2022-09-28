@@ -9,7 +9,7 @@ var plurality = {
       }, Object.assign(...candidates.map((c) => ({ [c]: 0 }))))
     );
 
-    const [topCand, topVotes] = votes.reduce(
+    const [topCand, _] = votes.reduce(
       ([n, m], [v, c]) => (c > m ? [v, c] : [n, m]),
       ["?", -Infinity]
     );
